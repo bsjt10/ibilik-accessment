@@ -1,0 +1,7 @@
+<h1>Edit Room</h1>
+
+<form action="/room/<%= @room.id%>/edit" method="post">
+<input type="hidden" name="_method" value="put">
+Room: <input type="text" name="room[name]" value="<%= @room.name %>">
+<input type="submit" value="Change">
+</form>	
