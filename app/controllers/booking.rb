@@ -1,12 +1,12 @@
-get '/room/:id/name' do
+get '/rooms/:id/name' do
 	@room = Room.find(params[:id])
 	
 	@booking = Booking.select(:user_id).where(room_id: params[:id])
 	@user = User.select(:name).where(id: @booking)
-	erb :"static/room"
+	erb :"static/rooms"
 end
 
-post '/room/:id/name' do
+post '/rooms/:id/name' do
 @room = Room.find(params[:id])
 	@booking = Booking.select(:user_id).where(room_id: params[:id])
 	@user = User.select(:name).where(id: @comment)
@@ -14,23 +14,23 @@ post '/room/:id/name' do
 		booking_add = Booking.new(user_id: current_user.id, room_id: params[:id])
 		booking_add.save
 		@error = "Booking Added."
-		erb :'static/room'
+		erb :'static/rooms'
 end
 
 # Display booking
-get '/booking' do
+get '/bookings' do
 		
 	booking = Booking.where(user_id: current_user.id).pluck(:room_id)
 	@room_booking = []
 	booking.each do |room_id|
 		@room_booking << Room.find(room_id)
 	end
-	erb :"static/booking"
+	erb :"static/bookings"
 end
 
 
 #Delete booking
-delete '/room/:id/booking/:id' do
+delete '/rooms/:id/booking/:id' do
 	@booking = Booking.where(room_id: params[:id]).where(user_id: current_user.id)
 	@booking.destroy
 

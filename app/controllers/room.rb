@@ -1,11 +1,11 @@
 # Display new room form
 
-get '/room/new' do
+get '/rooms/new' do
 	erb :"post/new"
 end
 
 #Create new room
-post '/room' do
+post '/rooms' do
 	room = Room.find_by(name: params[:name])
 	if room.nil?
 		new_room = Room.new(user_id: current_user.id, item: params[:item])
@@ -17,13 +17,13 @@ post '/room' do
 end
 
 #Display room edit form
-get '/room/:id/edit' do
+get '/rooms/:id/edit' do
 	@room = Room.find(params[:id])
 	erb :"static/edit_room"
 end
 
 #Update room
-patch '/room/:id' do
+patch '/rooms/:id' do
 	@room = Room.find(params[:id])
 	room.update(name: params[:name], description: params[:description])
 	room.save
@@ -31,7 +31,7 @@ patch '/room/:id' do
 end
 
 #Delete room
-delete '/room/:id' do
+delete '/rooms/:id' do
 	room = Room.find(params[:id])
 	room.destroy
 

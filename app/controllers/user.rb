@@ -1,7 +1,7 @@
 require 'byebug'
 
 # User login
-post '/login' do
+post '/users/login' do
  	user = User.authenticate(params[:email], params[:password])
 
  if user
@@ -24,7 +24,7 @@ get '/users/new' do
 end
 
 # Create new user
-post '/signup' do
+post '/users' do
 	user = User.find_by(email: params[:email])
 	if user.nil?
 		user = User.new(name: params[:name], email: params[:email],
@@ -34,7 +34,7 @@ post '/signup' do
 		erb :'static/index'
 	else
 		@error = "Error. User exists"
-		erb :'/signup'
+		erb :'/users/new'
 	end
 end
 

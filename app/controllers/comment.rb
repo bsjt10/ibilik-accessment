@@ -1,12 +1,12 @@
-get '/room/:id/name' do
+get '/rooms/:id/name' do
 	@room = Room.find(params[:id])
 	
 	@comment = Comment.select(:user_id).where(room_id: params[:id])
 	@user = User.select(:name).where(id: @comment)
-	erb :"static/room"
+	erb :"static/rooms"
 end
 
-post '/room/:id/name' do
+post '/rooms/:id/name' do
 @room = Room.find(params[:id])
 	@comment = Comment.select(:user_id).where(room_id: params[:id])
 	@user = User.select(:name).where(id: @comment)
@@ -14,26 +14,26 @@ post '/room/:id/name' do
 		comment_add = Comment.new(user_id: current_user.id, room_id: params[:id], comment: params[:comment])
 		comment_add.save
 		@error = "Comment Added."
-		erb :'static/room'
+		erb :'static/rooms'
 end
 
 # Display comment edit form
 
-get '/room/:id/comment/:id/edit' do
+get '/rooms/:id/comments/:id/edit' do
 	@comment = Comment.find(params[:id])
-	erb :'/room/:id/comment/:id/edit'
+	erb :'/rooms/:id/comments/:id/edit'
 end 
 
 # Update comment
 
-patch '/room/:id/comment/:id' do
+patch '/rooms/:id/comments/:id' do
 	comment = Comment.find(params[:id])
 	comment.update(params[:comment])
-	redirect "/room/#{comment.room.id}"
+	redirect "/rooms/#{comments.rooms.id}"
 end
 
 
-delete '/room/:id/comment/:id' do
+delete '/rooms/:id/comments/:id' do
 	@comment = Comment.where(room_id: params[:id]).where(user_id: current_user.id)
 	@comment.destroy
 
