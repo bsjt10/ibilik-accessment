@@ -8,15 +8,16 @@ Description:  <%= @user.description %><br>
 <%= @error if @error %>
 
 	<h3>My Room List</h3>
-	<tr><% @user_room.each do |each_room| %></tr>
-		<p><a href="/room/<%= each_room.id%>/name"><%= each_room.name %></a>
+	<tr><% @user.rooms.each do |each_room| %></tr>
+		<p><a href="/rooms/<%= each_room.id%>/name"><%= each_room.name %></a>
 			<%if current_user %>
-				<a href="/room/<%= each_room.id%>/edit"><button>Edit</button></a>
-				<form action="/room/<%= each_room.id %>" method="post">
+				<a href="/rooms/<%= each_room.id%>/edit"><button>Edit</button></a>
+				<form action="/rooms/<%= each_room.id %>" method="post">
 					<input type="hidden" name="_method" value="delete">
 				<button type="submit">Delete</button>
 				</form>
 			<% end %></p>
 	<%end %>
+
 
 <a href="/users/logout"><button>Logout</button></a>

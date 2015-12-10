@@ -25,16 +25,21 @@ end
 
 # Create new user
 post '/users' do
-	user = User.find_by(email: params[:email])
-	if user.nil?
+	# user = User.find_by(email: params[:email])
+	# if user.nil?
 		user = User.new(name: params[:name], email: params[:email],
 		 password: params[:password], description: params[:description])
-		user.save
+		if user.save
+		session[:user_id] = user.id
 		@error = "Signed up. Logging in."
 		erb :'static/index'
-	else
+		else
 		@error = "Error. User exists"
 		erb :'/users/new'
 	end
 end
 
+get '/users/:id' do
+	@user = User.find(params[:id])
+	erb :"user/profile"
+end

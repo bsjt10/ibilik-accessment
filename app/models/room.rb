@@ -1,6 +1,6 @@
 class Room < ActiveRecord::Base
 	#valdiation
-	validates :name, presence: true
+	# validates :name, presence: true
 
 	#database relationship
 	belongs_to :user

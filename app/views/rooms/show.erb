@@ -1,0 +1,44 @@
+<h1><%= @room.name %><h1>
+
+<% if current_user.id != @room.user_id %>
+<% if flash[:ok] %>
+	<%= flash[:ok] %>
+	<% end %>
+<form action="/rooms/<%= @room.id %>/book" method="POST">
+	<input type="submit" value="Book This Room">
+</form>
+<% if flash[:no] %>
+	<%= flash[:no] %>
+	<% end %>
+<form action="/rooms/<%= @room.id %>/book" method="POST">
+	<input type="submit" value="Cancel Booking">
+</form>
+<% end %>
+<% if current_user.id == @room.user_id %>
+<a href="/rooms/<%= @room.id %>/edit"><button>Edit Room</button></a>
+<form action="/rooms/<%= @room.id %>" method="post">
+	<input type="hidden" name="_method" value="delete">
+	<input type="submit" value="Delete">
+</form>
+<% end %>
+<form action="/rooms/<%= @room.id %>/comment" method="POST">
+	<label>Comment: </label>
+	<textarea type="text" name="comment"></textarea><br>
+	<input type="submit" value="Submit Comment">
+</form>
+<% @comment.each_with_index do |comment,index| %>
+<%= index + 1%>) <%= comment.comment %> (by <%= comment.user.name %>)<br><br>
+<% if current_user.id == comment.user_id %>
+<form action="/rooms/<%= @room.id %>/comment/<%= comment.id %>" method="post">
+	<input type="hidden" name="_method" value="patch">
+	<label>Edit Comment: </label>
+	<input type="text" name="input" placeholder="<%= comment.comment%>"><br>
+	<input type="submit" value="Update Answer">
+</form>
+<form action="/rooms/<%= @room.id %>/comment/<%= comment.id %>" method="post">
+	<input type="hidden" name="_method" value="delete">
+	<input type="submit" value="Delete">
+</form>
+<% end %>
+<% end %><br>
+<a href="/">Main Page</a>
